@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hack_the_tool/screens/detail_screen.dart';
+import 'package:hack_the_tool/screens/home_screen.dart';
 import 'package:hack_the_tool/screens/signin_screen.dart';
 import 'package:hack_the_tool/screens/signup_screen.dart';
 
@@ -8,7 +10,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +25,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SignInScreen(),
-
       routes: {
         SignInScreen.routeName: (context) => SignInScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),
-
+        DetailScreen.routeName: (context) => DetailScreen(),
+        HomeScreen.routeName: (context) => HomeScreen(),
       },
     );
   }
 }
-
-
-
-

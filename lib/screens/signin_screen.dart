@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hack_the_tool/screens/home_screen.dart';
 import 'package:hack_the_tool/screens/signup_screen.dart';
 import '../widgets/bottom_navigation_widget.dart';
 import '../widgets/text_field_widget.dart';
@@ -69,6 +70,7 @@ class SignInScreen extends StatelessWidget {
 
                 BottomNavigationButton('Sign In', () async {
                   if (Form.of(context)?.validate() ?? false) {
+                    Navigator.pushNamed(context, HomeScreen.routeName);
                   }
                 }),
                 Padding(

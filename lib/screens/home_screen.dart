@@ -10,9 +10,8 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Center(
-          child: Text('Hack The Tool'),
-        ),
+        title: Text('Hack The Tool'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),

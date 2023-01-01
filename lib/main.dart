@@ -4,6 +4,8 @@ import 'package:hack_the_tool/screens/home_screen.dart';
 import 'package:hack_the_tool/screens/signin_screen.dart';
 import 'package:hack_the_tool/screens/signup_screen.dart';
 
+import 'screens/bookmark_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -30,6 +32,7 @@ class MyApp extends StatelessWidget {
         SignUpScreen.routeName: (context) => SignUpScreen(),
         DetailScreen.routeName: (context) => DetailScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        BookmarkScreen.routeName: (context) => BookmarkScreen(),
       },
     );
   }

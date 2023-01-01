@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'bookmark_screen.dart';
+
 class DetailScreen extends StatelessWidget {
   static const routeName = 'DetailScreen';
 
@@ -92,7 +94,9 @@ class ShortcutPopup extends StatelessWidget {
                 height: 40,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, BookmarkScreen.routeName);
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                   decoration: BoxDecoration(

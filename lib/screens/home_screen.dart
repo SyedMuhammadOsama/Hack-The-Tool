@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hack_the_tool/screens/detail_screen.dart';
 
+import '../drawer/drawer_widget.dart';
+
 class HomeScreen extends StatelessWidget {
   static const routeName = 'HomeScreen';
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,6 +10,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerWidget(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Hack The Tool'),

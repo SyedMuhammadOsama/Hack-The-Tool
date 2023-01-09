@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1012397773859",
+    "project_id": "hack-the-tool",
+    "storage_bucket": "hack-the-tool.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012397773859:android:f9fa066f3052c083504d96",
+        "android_client_info": {
+          "package_name": "com.example.hack_the_tool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012397773859-p4i1klo3sl1pocaesuuqmg8o8bn6pmq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtkYoOAasP4KYgltbu1cx9rDfwGBr6t5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012397773859-p4i1klo3sl1pocaesuuqmg8o8bn6pmq0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

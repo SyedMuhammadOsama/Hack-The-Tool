@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hack_the_tool/models/shortcut.dart';
+import 'package:hack_the_tool/screens/Signin_screen.dart';
 
 import '../bloc/software_bloc/software_bloc.dart';
-import 'bookmark_screen.dart';
 
 class DetailScreen extends StatelessWidget {
   static const routeName = 'DetailScreen';
@@ -70,15 +71,21 @@ class ShortcutContainer extends StatelessWidget {
   }
 }
 
-class ShortcutPopup extends StatelessWidget {
+class ShortcutPopup extends StatefulWidget {
   static const routeName = 'ShortcutPopup';
 
   final String shortcut;
   final String shortcutResult;
-  const ShortcutPopup(
+  ShortcutPopup(
       {Key? key, required this.shortcut, required this.shortcutResult})
       : super(key: key);
 
+  @override
+  State<ShortcutPopup> createState() => _ShortcutPopupState();
+}
+
+class _ShortcutPopupState extends State<ShortcutPopup> {
+  bool addedToBookmark = false;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -96,7 +103,7 @@ class ShortcutPopup extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                shortcutResult,
+                widget.shortcutResult,
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -107,7 +114,7 @@ class ShortcutPopup extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                shortcut,
+                widget.shortcut,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
               ),
@@ -116,15 +123,28 @@ class ShortcutPopup extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, BookmarkScreen.routeName);
+                  if (FirebaseAuth.instance.currentUser == null) {
+                    Navigator.pushNamed(context, SignInScreen.routeName);
+                  } else {
+                    setState(() {
+                      addedToBookmark = true;
+                    });
+                  }
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Theme.of(context).primaryColor,
-                        const Color.fromARGB(255, 226, 30, 233)
-                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                      gradient: addedToBookmark
+                          ? LinearGradient(
+                              colors: [Colors.grey, Colors.grey],
+                            )
+                          : LinearGradient(
+                              colors: [
+                                  Theme.of(context).primaryColor,
+                                  const Color.fromARGB(255, 226, 30, 233)
+                                ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
                       borderRadius: BorderRadius.circular(10)),
                   child: const Text('Add to Bookmark',
                       style: TextStyle(

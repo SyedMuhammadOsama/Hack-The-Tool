@@ -26,7 +26,8 @@ class SignUpScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Center(child: const Text('HackTheTool')),
+            title: const Text('HackTheTool'),
+            centerTitle: true,
             backgroundColor: Theme.of(context).primaryColor,
           ),
           resizeToAvoidBottomInset: false,
@@ -35,14 +36,15 @@ class SignUpScreen extends StatelessWidget {
               builder: (context) {
                 return Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          'Sign Up',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline4,
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(top: 15.0, bottom: 30),
+                        child: const Text(
+                          'Did you forget to signup!',
+                          style: TextStyle(fontSize: 17),
                         ),
                       ),
                       Container(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hack_the_tool/auth/auth_bloc.dart';
-import 'package:hack_the_tool/screens/home_screen.dart';
 import 'package:hack_the_tool/screens/signup_screen.dart';
 import 'package:lottie/lottie.dart';
 
@@ -22,15 +21,14 @@ class SignInScreen extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.user != null) {
-          Navigator.pushNamed(context, HomeScreen.routeName);
+          Navigator.pop(context);
         }
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Center(
-              child: Text('Hack The Tool'),
-            ),
+            title: Text('Hack The Tool'),
+            centerTitle: true,
             backgroundColor: Theme.of(context).primaryColor,
           ),
           resizeToAvoidBottomInset: false,
@@ -45,6 +43,14 @@ class SignInScreen extends StatelessWidget {
                       height: 150,
                       child:
                           Lottie.asset('assets/animation/authentication.json'),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(top: 15.0, bottom: 30),
+                      child: const Text(
+                        'To use Bookmark, Please SignIn first',
+                        style: TextStyle(fontSize: 17),
+                      ),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hack_the_tool/models/shortcut.dart';
 
+import '../bloc/software_bloc/software_bloc.dart';
 import 'bookmark_screen.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -9,30 +12,32 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          title: Text('Hack The Tool'),
-          centerTitle: true,
-        ),
-        body: ListView.builder(
-          itemBuilder: (context, index) => ShortcutContainer(),
-        )
-
-        // ListWheelScrollView.useDelegate(
-        //   itemExtent: 70,
-        //   diameterRatio: 2.5,
-        //   childDelegate: ListWheelChildBuilderDelegate(
-        //     childCount: 20,
-        //     builder: (context, index) => ShortcutContainer(),
-        //   ),
-        // ),
-        );
+    return BlocBuilder<SoftwareBloc, SoftwareState>(
+      builder: (context, state) {
+        List<ShortcutModel> shortcutList = state.currentSoftware!.shortcutList;
+        return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).primaryColor,
+              title: Text('Hack The Tool'),
+              centerTitle: true,
+            ),
+            body: ListView.builder(
+              itemCount: shortcutList.length,
+              itemBuilder: (context, index) => ShortcutContainer(
+                  shortcutResult: shortcutList[index].shortcutResult ?? '',
+                  shortcut: shortcutList[index].shortcut),
+            ));
+      },
+    );
   }
 }
 
 class ShortcutContainer extends StatelessWidget {
-  const ShortcutContainer({Key? key}) : super(key: key);
+  final String shortcutResult;
+  final String shortcut;
+  const ShortcutContainer(
+      {Key? key, required this.shortcutResult, required this.shortcut})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +45,20 @@ class ShortcutContainer extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (context) => ShortcutPopup(),
+          builder: (context) => ShortcutPopup(
+            shortcut: shortcut,
+            shortcutResult: shortcutResult,
+          ),
         );
       },
       child: Column(
         children: [
           Container(
             padding: EdgeInsets.all(25),
-            child: Center(child: Text('Shortcut Result')),
+            child: Text(
+              shortcutResult,
+              textAlign: TextAlign.center,
+            ),
           ),
           Divider(
             color: Theme.of(context).primaryColor,
@@ -61,7 +72,12 @@ class ShortcutContainer extends StatelessWidget {
 
 class ShortcutPopup extends StatelessWidget {
   static const routeName = 'ShortcutPopup';
-  const ShortcutPopup({Key? key}) : super(key: key);
+
+  final String shortcut;
+  final String shortcutResult;
+  const ShortcutPopup(
+      {Key? key, required this.shortcut, required this.shortcutResult})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,18 +96,23 @@ class ShortcutPopup extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Shortcut Result ',
+                shortcutResult,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.grey),
               ),
               SizedBox(height: 20),
               Text(
-                'All details here lkasjdk asdas k  ld askld s l',
+                shortcut,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
               ),
               SizedBox(
-                height: 40,
+                height: 20,
               ),
               InkWell(
                 onTap: () {

@@ -48,7 +48,11 @@ class SoftwareDetailScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      MixCardRow(),
+                      MixCardRow(
+                        macSupport: state.currentSoftware!.macOs ?? 'error',
+                        linuxSupport: state.currentSoftware!.linux ?? 'error',
+                        winSupport: state.currentSoftware!.windows ?? 'error',
+                      ),
                     ],
                   ),
                 ),
@@ -60,9 +64,7 @@ class SoftwareDetailScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                 ),
-                AboutSoftware(
-                    text:
-                        ' iahd adkjasbdi adia da diad ka as sd askd adasnd asdja ka d akd id k k askndkasnd asdasjk as ask k  askxks xk asjksask xk ask xkas x jkas kas kxkas kxas xkas  asjkx kasksabckas '),
+                AboutSoftware(text: state.currentSoftware!.intro ?? 'error'),
                 const SeparatorBar(),
                 Container(
                   alignment: Alignment.centerLeft,
@@ -72,7 +74,8 @@ class SoftwareDetailScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                 ),
-                AboutSoftware(text: '● free'),
+                AboutSoftware(
+                    text: state.currentSoftware!.subscription ?? 'eror'),
                 const SeparatorBar(),
                 Container(
                   alignment: Alignment.centerLeft,
@@ -96,7 +99,7 @@ class SoftwareDetailScreen extends StatelessWidget {
                       }
                     },
                     child: Text(
-                      'https://stackoverflow.com/questions/43583411/how-to-create-a-hyperlink-in-flutter-widget',
+                      state.currentSoftware!.officialLink ?? "error",
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),
@@ -139,7 +142,15 @@ class SoftwareImageContainer extends StatelessWidget {
 }
 
 class MixCardRow extends StatelessWidget {
-  const MixCardRow({Key? key}) : super(key: key);
+  final String macSupport;
+  final String winSupport;
+  final String linuxSupport;
+  const MixCardRow(
+      {Key? key,
+      required this.macSupport,
+      required this.winSupport,
+      required this.linuxSupport})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -149,16 +160,16 @@ class MixCardRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           DecoratedCard(
-            textQuantity: 'Yes',
+            textQuantity: macSupport,
             text: 'Mac',
             icon: Icons.apple_outlined,
           ),
           DecoratedCard(
-              textQuantity: 'Yes',
+              textQuantity: winSupport,
               text: 'Windows',
               icon: Icons.window_outlined),
           DecoratedCard(
-            textQuantity: ' No',
+            textQuantity: linuxSupport,
             text: 'Linux',
             icon: Icons.apple_outlined,
           ),

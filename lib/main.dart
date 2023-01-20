@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:hack_the_tool/bloc/software_bloc/software_bloc.dart';
 import 'package:hack_the_tool/screens/detail_screen.dart';
 import 'package:hack_the_tool/screens/home_screen.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           create: (context) => SoftwareBloc(),
         ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         theme: ThemeData(
           primaryColor: const Color.fromARGB(255, 176, 101, 189),
           textTheme: const TextTheme(

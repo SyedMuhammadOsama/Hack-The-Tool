@@ -8,9 +8,9 @@ class TextFormFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   TextFormFieldWidget(
       {Key? key,
-        required this.validator,
-        required this.hint,
-        required this.controller})
+      required this.validator,
+      required this.hint,
+      required this.controller})
       : super(key: key);
 
   @override
@@ -19,15 +19,14 @@ class TextFormFieldWidget extends StatelessWidget {
         margin: const EdgeInsets.only(top: 10, bottom: 30, left: 10, right: 10),
         child: TextFormField(
           controller: controller,
-
           validator: validator,
           style: Theme.of(context).textTheme.bodyLarge?.merge(const TextStyle(
-            color: Colors.black,
-          )),
+                color: Colors.black,
+              )),
           cursorColor: Colors.black,
           decoration: InputDecoration(
             contentPadding:
-            const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
+                const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
             hintText: hint,
             hintStyle: Theme.of(context)
                 .textTheme

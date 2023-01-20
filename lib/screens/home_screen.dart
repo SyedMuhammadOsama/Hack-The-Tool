@@ -12,10 +12,26 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
+  List<Software> searchList = [];
+  TextEditingController searchController = TextEditingController();
+
+  List<Software> search(String key, softwareList) {
+    List<Software> result = [];
+    if (key != '') {
+      for (Software item in softwareList) {
+        if (item.name.toLowerCase().contains(key.toLowerCase())) {
+          result.add(item);
+        }
+      }
+    }
+
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SoftwareBloc, SoftwareState>(
@@ -29,24 +45,55 @@ class _HomePageState extends State<HomeScreen> {
           body: ListView(
             shrinkWrap: true,
             children: [
+              SearchFieldWidgetHome(
+                controller: searchController,
+                hint: 'Search...',
+                onChanged: (value) {
+                  setState(() {
+                    searchList = search(value, softwareList);
+                  });
+                },
+              ),
               const DisplayImageContainer(),
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: softwareList.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 15 / 16,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemBuilder: (context, index) => SoftwareContainer(
-                    softwareName: softwareList[index].name,
-                    softwareLogo: softwareList[index].image,
-                    currentSoftware: softwareList[index],
-                  ),
-                ),
+                child: searchController.text.isEmpty
+                    ? GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: softwareList.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 15 / 16,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10),
+                        itemBuilder: (context, index) => SoftwareContainer(
+                          softwareName: softwareList[index].name,
+                          softwareLogo: softwareList[index].image,
+                          currentSoftware: softwareList[index],
+                        ),
+                      )
+                    : searchList.isNotEmpty
+                        ? GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: searchList.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 15 / 16,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10),
+                            itemBuilder: (context, index) => SoftwareContainer(
+                              softwareName: searchList[index].name,
+                              softwareLogo: searchList[index].image,
+                              currentSoftware: searchList[index],
+                            ),
+                          )
+                        : Center(
+                            child: Text('Item not found...'),
+                          ),
               ),
             ],
           ),
@@ -132,5 +179,62 @@ class DisplayImageContainer extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SearchFieldWidgetHome extends StatelessWidget {
+  final String hint;
+  Function(String) onChanged;
+  final TextEditingController controller;
+
+  SearchFieldWidgetHome(
+      {Key? key,
+      required this.hint,
+      required this.onChanged,
+      required this.controller})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.only(top: 10, bottom: 0, left: 10, right: 10),
+        child: TextFormField(
+          controller: controller,
+          onChanged: onChanged,
+          style: Theme.of(context).textTheme.bodyLarge?.merge(const TextStyle(
+                color: Colors.black,
+              )),
+          cursorColor: Colors.black,
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
+            hintText: hint,
+            hintStyle: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.merge(const TextStyle(color: Color(0xFF9B8F8F))),
+            filled: true,
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: BorderSide(width: 0, style: BorderStyle.none
+                    // color: Theme.of(context).primaryColor,
+                    )),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: BorderSide(width: 0, style: BorderStyle.none
+                    // color: Theme.of(context).primaryColor,
+                    )),
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: BorderSide(width: 0, style: BorderStyle.none
+                    // color: Theme.of(context).primaryColor,
+                    )),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: BorderSide(width: 0, style: BorderStyle.none
+                    // color: Theme.of(context).primaryColor,
+                    )),
+          ),
+        ));
   }
 }

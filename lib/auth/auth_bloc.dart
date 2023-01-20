@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -26,9 +24,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           await authService.signIn(event.email, event.password);
       emit(state.copyWith(user: credential.user));
     } catch (e) {
-      log(
-        e.toString(),
-      );
     } finally {
       emit(state.copyWith(isLoading: false));
     }
@@ -42,9 +37,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           await authService.signUp(event.email, event.password);
       emit(state.copyWith(user: credential.user));
     } catch (e) {
-      log(
-        e.toString(),
-      );
     } finally {
       emit(state.copyWith(isLoading: false));
     }

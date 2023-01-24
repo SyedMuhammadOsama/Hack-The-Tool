@@ -11,6 +11,7 @@ import 'package:hack_the_tool/screens/software_detail_screen.dart';
 import 'package:hack_the_tool/screens/splash_screen.dart';
 
 import 'auth/auth_bloc.dart';
+import 'bloc/bookmark_bloc/bookmark_bloc.dart';
 import 'firebase_options.dart';
 import 'screens/bookmark_screen.dart';
 
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (context) => BookmarkBloc(),
         ),
         BlocProvider(
           create: (context) => SoftwareBloc(),

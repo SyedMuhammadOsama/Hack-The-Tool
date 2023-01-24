@@ -28,6 +28,11 @@ class AuthService {
   }
 
   void logOut() async {
-    await FirebaseAuth.instance.signOut();
+    if (FirebaseAuth.instance.currentUser != null) {
+      await FirebaseAuth.instance.signOut();
+      Utils().showSnackBar('You are Successfully logged out');
+    } else {
+      Utils().showSnackBar('You are currently not signed in');
+    }
   }
 }

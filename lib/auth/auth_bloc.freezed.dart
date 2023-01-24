@@ -16,24 +16,25 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthEvent {
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) onSignIn,
     required TResult Function(String email, String password) onSignUp,
+    required TResult Function() onLogout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String email, String password)? onSignIn,
     TResult? Function(String email, String password)? onSignUp,
+    TResult? Function()? onLogout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? onSignIn,
     TResult Function(String email, String password)? onSignUp,
+    TResult Function()? onLogout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -41,24 +42,23 @@ mixin _$AuthEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnSignIn value) onSignIn,
     required TResult Function(OnSignUp value) onSignUp,
+    required TResult Function(OnLogout value) onLogout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnSignIn value)? onSignIn,
     TResult? Function(OnSignUp value)? onSignUp,
+    TResult? Function(OnLogout value)? onLogout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnSignIn value)? onSignIn,
     TResult Function(OnSignUp value)? onSignUp,
+    TResult Function(OnLogout value)? onLogout,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $AuthEventCopyWith<AuthEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -66,8 +66,6 @@ mixin _$AuthEvent {
 abstract class $AuthEventCopyWith<$Res> {
   factory $AuthEventCopyWith(AuthEvent value, $Res Function(AuthEvent) then) =
       _$AuthEventCopyWithImpl<$Res, AuthEvent>;
-  @useResult
-  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -79,32 +77,13 @@ class _$AuthEventCopyWithImpl<$Res, $Val extends AuthEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? email = null,
-    Object? password = null,
-  }) {
-    return _then(_value.copyWith(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OnSignInCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
+abstract class _$$OnSignInCopyWith<$Res> {
   factory _$$OnSignInCopyWith(
           _$OnSignIn value, $Res Function(_$OnSignIn) then) =
       __$$OnSignInCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String email, String password});
 }
@@ -174,6 +153,7 @@ class _$OnSignIn implements OnSignIn {
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) onSignIn,
     required TResult Function(String email, String password) onSignUp,
+    required TResult Function() onLogout,
   }) {
     return onSignIn(email, password);
   }
@@ -183,6 +163,7 @@ class _$OnSignIn implements OnSignIn {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String email, String password)? onSignIn,
     TResult? Function(String email, String password)? onSignUp,
+    TResult? Function()? onLogout,
   }) {
     return onSignIn?.call(email, password);
   }
@@ -192,6 +173,7 @@ class _$OnSignIn implements OnSignIn {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? onSignIn,
     TResult Function(String email, String password)? onSignUp,
+    TResult Function()? onLogout,
     required TResult orElse(),
   }) {
     if (onSignIn != null) {
@@ -205,6 +187,7 @@ class _$OnSignIn implements OnSignIn {
   TResult map<TResult extends Object?>({
     required TResult Function(OnSignIn value) onSignIn,
     required TResult Function(OnSignUp value) onSignUp,
+    required TResult Function(OnLogout value) onLogout,
   }) {
     return onSignIn(this);
   }
@@ -214,6 +197,7 @@ class _$OnSignIn implements OnSignIn {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnSignIn value)? onSignIn,
     TResult? Function(OnSignUp value)? onSignUp,
+    TResult? Function(OnLogout value)? onLogout,
   }) {
     return onSignIn?.call(this);
   }
@@ -223,6 +207,7 @@ class _$OnSignIn implements OnSignIn {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnSignIn value)? onSignIn,
     TResult Function(OnSignUp value)? onSignUp,
+    TResult Function(OnLogout value)? onLogout,
     required TResult orElse(),
   }) {
     if (onSignIn != null) {
@@ -235,22 +220,18 @@ class _$OnSignIn implements OnSignIn {
 abstract class OnSignIn implements AuthEvent {
   factory OnSignIn(final String email, final String password) = _$OnSignIn;
 
-  @override
   String get email;
-  @override
   String get password;
-  @override
   @JsonKey(ignore: true)
   _$$OnSignInCopyWith<_$OnSignIn> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OnSignUpCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
+abstract class _$$OnSignUpCopyWith<$Res> {
   factory _$$OnSignUpCopyWith(
           _$OnSignUp value, $Res Function(_$OnSignUp) then) =
       __$$OnSignUpCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String email, String password});
 }
@@ -320,6 +301,7 @@ class _$OnSignUp implements OnSignUp {
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) onSignIn,
     required TResult Function(String email, String password) onSignUp,
+    required TResult Function() onLogout,
   }) {
     return onSignUp(email, password);
   }
@@ -329,6 +311,7 @@ class _$OnSignUp implements OnSignUp {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String email, String password)? onSignIn,
     TResult? Function(String email, String password)? onSignUp,
+    TResult? Function()? onLogout,
   }) {
     return onSignUp?.call(email, password);
   }
@@ -338,6 +321,7 @@ class _$OnSignUp implements OnSignUp {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? onSignIn,
     TResult Function(String email, String password)? onSignUp,
+    TResult Function()? onLogout,
     required TResult orElse(),
   }) {
     if (onSignUp != null) {
@@ -351,6 +335,7 @@ class _$OnSignUp implements OnSignUp {
   TResult map<TResult extends Object?>({
     required TResult Function(OnSignIn value) onSignIn,
     required TResult Function(OnSignUp value) onSignUp,
+    required TResult Function(OnLogout value) onLogout,
   }) {
     return onSignUp(this);
   }
@@ -360,6 +345,7 @@ class _$OnSignUp implements OnSignUp {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnSignIn value)? onSignIn,
     TResult? Function(OnSignUp value)? onSignUp,
+    TResult? Function(OnLogout value)? onLogout,
   }) {
     return onSignUp?.call(this);
   }
@@ -369,6 +355,7 @@ class _$OnSignUp implements OnSignUp {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnSignIn value)? onSignIn,
     TResult Function(OnSignUp value)? onSignUp,
+    TResult Function(OnLogout value)? onLogout,
     required TResult orElse(),
   }) {
     if (onSignUp != null) {
@@ -381,14 +368,118 @@ class _$OnSignUp implements OnSignUp {
 abstract class OnSignUp implements AuthEvent {
   factory OnSignUp(final String email, final String password) = _$OnSignUp;
 
-  @override
   String get email;
-  @override
   String get password;
-  @override
   @JsonKey(ignore: true)
   _$$OnSignUpCopyWith<_$OnSignUp> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnLogoutCopyWith<$Res> {
+  factory _$$OnLogoutCopyWith(
+          _$OnLogout value, $Res Function(_$OnLogout) then) =
+      __$$OnLogoutCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OnLogoutCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$OnLogout>
+    implements _$$OnLogoutCopyWith<$Res> {
+  __$$OnLogoutCopyWithImpl(_$OnLogout _value, $Res Function(_$OnLogout) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$OnLogout implements OnLogout {
+  _$OnLogout();
+
+  @override
+  String toString() {
+    return 'AuthEvent.onLogout()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$OnLogout);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String email, String password) onSignIn,
+    required TResult Function(String email, String password) onSignUp,
+    required TResult Function() onLogout,
+  }) {
+    return onLogout();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String email, String password)? onSignIn,
+    TResult? Function(String email, String password)? onSignUp,
+    TResult? Function()? onLogout,
+  }) {
+    return onLogout?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String email, String password)? onSignIn,
+    TResult Function(String email, String password)? onSignUp,
+    TResult Function()? onLogout,
+    required TResult orElse(),
+  }) {
+    if (onLogout != null) {
+      return onLogout();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnSignIn value) onSignIn,
+    required TResult Function(OnSignUp value) onSignUp,
+    required TResult Function(OnLogout value) onLogout,
+  }) {
+    return onLogout(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnSignIn value)? onSignIn,
+    TResult? Function(OnSignUp value)? onSignUp,
+    TResult? Function(OnLogout value)? onLogout,
+  }) {
+    return onLogout?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnSignIn value)? onSignIn,
+    TResult Function(OnSignUp value)? onSignUp,
+    TResult Function(OnLogout value)? onLogout,
+    required TResult orElse(),
+  }) {
+    if (onLogout != null) {
+      return onLogout(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnLogout implements AuthEvent {
+  factory OnLogout() = _$OnLogout;
 }
 
 /// @nodoc

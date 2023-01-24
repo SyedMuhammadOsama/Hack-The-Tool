@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,9 +16,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthState.initial()) {
     on<OnSignIn>((event, emit) => _onSignIn(event, emit));
     on<OnSignUp>((event, emit) => _onSignUp(event, emit));
+    on<OnLogout>((event, emit) => _onLogout(event, emit));
   }
 
-  void _onSignIn(AuthEvent event, Emitter<AuthState> emit) async {
+  void _onSignIn(OnSignIn event, Emitter<AuthState> emit) async {
     try {
       emit(state.copyWith(isLoading: true));
 
@@ -29,7 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onSignUp(AuthEvent event, Emitter<AuthState> emit) async {
+  void _onSignUp(OnSignUp event, Emitter<AuthState> emit) async {
     try {
       emit(state.copyWith(isLoading: true));
 
@@ -37,6 +40,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           await authService.signUp(event.email, event.password);
       emit(state.copyWith(user: credential.user));
     } catch (e) {
+    } finally {
+      emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  void _onLogout(OnLogout event, Emitter<AuthState> emit) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+
+      authService.logOut();
+    } catch (e) {
+      log(e.toString());
     } finally {
       emit(state.copyWith(isLoading: false));
     }

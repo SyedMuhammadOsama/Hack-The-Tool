@@ -90,13 +90,11 @@ class SoftwareDetailScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 30.0),
                   child: InkWell(
                     onTap: () async {
-                      const url =
-                          'https://stackoverflow.com/questions/43583411/how-to-create-a-hyperlink-in-flutter-widget';
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
+                      String? url = state.currentSoftware?.officialLink;
+                      final Uri _url = Uri.parse(url ?? '');
+
+                      await launchUrl(_url,
+                          mode: LaunchMode.externalApplication);
                     },
                     child: Text(
                       state.currentSoftware!.officialLink ?? "error",

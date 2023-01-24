@@ -2,9 +2,12 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hack_the_tool/models/bookmark.dart';
 import 'package:hack_the_tool/models/shortcut.dart';
 
+import '../bloc/bookmark_bloc/bookmark_bloc.dart';
 import '../bloc/software_bloc/software_bloc.dart';
+import '../models/software.dart';
 import 'Signin_screen.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -37,6 +40,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<SoftwareBloc, SoftwareState>(
       builder: (context, state) {
+        Software currentSoftware = state.currentSoftware!;
         List<ShortcutModel> shortcutList = state.currentSoftware!.shortcutList;
         return Scaffold(
             appBar: AppBar(
@@ -63,6 +67,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     shrinkWrap: true,
                     itemCount: shortcutList.length,
                     itemBuilder: (context, index) => ShortcutContainer(
+                        softwareName: currentSoftware.name,
                         shortcutResult:
                             shortcutList[index].shortcutResult ?? '',
                         shortcut: shortcutList[index].shortcut),
@@ -74,6 +79,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           shrinkWrap: true,
                           itemCount: searchList.length,
                           itemBuilder: (context, index) => ShortcutContainer(
+                              softwareName: currentSoftware.name,
                               shortcutResult:
                                   searchList[index].shortcutResult ?? '',
                               shortcut: searchList[index].shortcut),
@@ -91,8 +97,12 @@ class _DetailScreenState extends State<DetailScreen> {
 class ShortcutContainer extends StatelessWidget {
   final String shortcutResult;
   final String shortcut;
+  final String softwareName;
   const ShortcutContainer(
-      {Key? key, required this.shortcutResult, required this.shortcut})
+      {Key? key,
+      required this.shortcutResult,
+      required this.shortcut,
+      required this.softwareName})
       : super(key: key);
 
   @override
@@ -102,6 +112,7 @@ class ShortcutContainer extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) => ShortcutPopup(
+            softwareName: softwareName,
             shortcut: shortcut,
             shortcutResult: shortcutResult,
           ),
@@ -161,8 +172,12 @@ class ShortcutPopup extends StatefulWidget {
 
   final String shortcut;
   final String shortcutResult;
+  final String softwareName;
   ShortcutPopup(
-      {Key? key, required this.shortcut, required this.shortcutResult})
+      {Key? key,
+      required this.shortcut,
+      required this.shortcutResult,
+      required this.softwareName})
       : super(key: key);
 
   @override
@@ -170,7 +185,6 @@ class ShortcutPopup extends StatefulWidget {
 }
 
 class _ShortcutPopupState extends State<ShortcutPopup> {
-  bool addedToBookmark = false;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -216,25 +230,20 @@ class _ShortcutPopupState extends State<ShortcutPopup> {
               if (FirebaseAuth.instance.currentUser == null) {
                 Navigator.pushNamed(context, SignInScreen.routeName);
               } else {
-                setState(() {
-                  addedToBookmark = true;
-                });
+                Bookmark newBookmark = Bookmark(
+                    softwareName: widget.softwareName,
+                    shortcut: widget.shortcut,
+                    shortcutResult: widget.shortcutResult);
+                context.read<BookmarkBloc>().add(OnAddBookmark(newBookmark));
               }
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
               decoration: BoxDecoration(
-                  gradient: addedToBookmark
-                      ? LinearGradient(
-                          colors: [Colors.grey, Colors.grey],
-                        )
-                      : LinearGradient(
-                          colors: [
-                              Theme.of(context).primaryColor,
-                              const Color.fromARGB(255, 226, 30, 233)
-                            ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight),
+                  gradient: LinearGradient(colors: [
+                    Theme.of(context).primaryColor,
+                    const Color.fromARGB(255, 226, 30, 233)
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   borderRadius: BorderRadius.circular(10)),
               child: const Text('Add to Bookmark',
                   style: TextStyle(
